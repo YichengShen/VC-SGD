@@ -13,7 +13,7 @@ simulation:
   # FCD_FILE: '../osm_london/london_fcd.xml'
 
   num_rsu: 5            # number of RSU
-  num_vc: 10 # 0, 2, 4, 6, 8, 10
+  num_vc: 8 # 0, 2, 4, 6, 8, 10
   vc_min_vehi: 5
   maximum_rsu_accumulative_gradients: 10 # how many gradients does an RSU accumulate before updating the central server
 
@@ -22,7 +22,7 @@ neural_network:
   epoch: 500
   learning_rate: 0.0005
 
-seed: 0
+seed: 99
 
 
 # ********* frequently changed parameters ***************

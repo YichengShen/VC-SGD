@@ -105,12 +105,17 @@ def main():
 
     sumo_data = SUMO_Dataset(ROU_FILE, NET_FILE)
     vehicle_dict = {}
+    # location_list = sumo_data.rsuList_random(RSU_RANGE, NUM_RSU+NUM_VC) # uncomment this for random locations
     location_list = sumo_data.rsuList(RSU_RANGE, NUM_RSU+NUM_VC, output_junctions)
-    # rsu_list = location_list[:NUM_RSU]
-    # vc_list = location_list[NUM_RSU:]
-    rsu_list = location_list[NUM_VC:]
-    vc_list = location_list[:NUM_VC]
-    # rsu_list = sumo_data.rsuList_random(RSU_RANGE, NUM_RSU)
+
+    # Priotize RSU locations
+    rsu_list = location_list[:NUM_RSU]
+    vc_list = location_list[NUM_RSU:]
+
+    # Proitize VC locations
+    # rsu_list = location_list[NUM_VC:]
+    # vc_list = location_list[:NUM_VC]
+
     central_server = Central_Server(context)
 
 
