@@ -2,6 +2,8 @@ from locationPicker_v3 import output_junctions
 from scipy.spatial import Voronoi, voronoi_plot_2d
 import numpy as np
 import matplotlib.pyplot as plt
+from shapely.geometry.polygon import Polygon
+import matplotlib.path as mpltPath
 
 # Ref: https://nbviewer.jupyter.org/gist/pv/8037100
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Voronoi.html
@@ -108,13 +110,18 @@ print(regions)
 print("Vertices --")
 print(vertices)
 
-# colorize
-for region in regions:
-    polygon = vertices[region]
-    plt.fill(*zip(*polygon), alpha=0.4)
+# The cordinates of all polygons
+polygons = [Polygon(vertices[r]) for r in regions]
+# polygons = [mpltPath.Path(vertices[r]) for r in regions]
 
-plt.plot(points[:,0], points[:,1], 'ko')
-plt.xlim(800, 2600)
-plt.ylim(2700, 3700)
 
-plt.show()
+# # colorize
+# for region in regions:
+#     polygon = vertices[region]
+#     plt.fill(*zip(*polygon), alpha=0.4)
+
+# plt.plot(points[:,0], points[:,1], 'ko')
+# plt.xlim(800, 2600)
+# plt.ylim(2700, 3700)
+
+# plt.show()

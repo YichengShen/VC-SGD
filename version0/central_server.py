@@ -1,5 +1,7 @@
 from neural_network import Neural_Network
 from vehicle import Vehicle
+from data_partition import data_for_polygon
+from data_partition import val_train_data, val_test_data 
 import numpy as np
 import yaml
 import mxnet as mx
@@ -87,19 +89,22 @@ class Simulation:
     - rsu_list
     - dataset
     """
-    def __init__(self, FCD_file, vehicle_dict: dict, rsu_list: list, vc_list: list, central_server, training_set, val_train_data, val_test_data, num_round):
+    def __init__(self, FCD_file, vehicle_dict: dict, rsu_list: list, vc_list: list, polygons, central_server, num_round):
         self.FCD_file = FCD_file
         self.vehicle_dict = vehicle_dict
         self.rsu_list = rsu_list
         self.vc_list = vc_list
+        self.polygons = polygons
         self.central_server = central_server
         self.num_epoch = 0
         self.training_data = []
         self.epoch_loss = mx.metric.CrossEntropy()
         self.epoch_accuracy = mx.metric.Accuracy()
-        self.training_set = training_set
+        # self.training_set = training_set
         self.val_train_data = val_train_data
         self.val_test_data = val_test_data
+        self.training_data_byclass = []
+        self.training_label_byclass = []
         self.num_round = num_round
        
     def add_into_vehicle_dict(self, vehicle):
@@ -147,6 +152,7 @@ class Simulation:
 
     def new_epoch(self):
         self.num_epoch += 1
-        for i, (data, label) in enumerate(self.training_set):
-            self.training_data.append((data, label))
+        # for i, (data, label) in enumerate(self.training_set):
+        #     self.training_data.append((data, label))
+        self.training_data_byclass, self.training_label_byclass = data_for_polygon(self.polygons)
 
