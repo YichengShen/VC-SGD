@@ -4,7 +4,7 @@ from vehicle import Vehicle
 
 import yaml
 from locationPicker_v3 import output_junctions
-from map_partition import polygons
+# from map_partition import polygons
 import xml.etree.ElementTree as ET 
 
 import mxnet as mx
@@ -13,6 +13,7 @@ from mxnet.gluon.data.vision import transforms
 from gluoncv.data import transforms as gcv_transforms
 import numpy as np
 import time, random, argparse, itertools
+import pickle
 
 
 def parse_args():
@@ -38,6 +39,10 @@ def simulate(simulation):
     
     # Maximum training epochs
     while simulation.num_epoch <= cfg['neural_network']['epoch']:
+
+        # Clear the vehicle dict after each loop of sumo file
+        simulation.vehicle_dict = {}
+
         # For each time step (sec) in the FCD file 
         for timestep in root:
 
@@ -90,7 +95,7 @@ def simulate(simulation):
                             del simulation.training_label_byclass[polygon_index][:BATCH_SIZE]
                             vehi.training_data_assigned[polygon_index] = (training_data_assigned, training_label_assigned)
                     else:
-                        simulation.print_accuracy()
+                        simulation.print_accuracy(simulation.running_time + float(timestep.attrib['time']))
                         simulation.new_epoch()
                         if len(simulation.training_data_byclass[polygon_index]) >= BATCH_SIZE:
                             training_data_assigned = simulation.training_data_byclass[polygon_index][:BATCH_SIZE]
@@ -105,6 +110,8 @@ def simulate(simulation):
                     vehi.download_model_from(simulation.central_server)
 
                     vehi.compute_and_upload(simulation, closest_rsu)
+
+        simulation.running_time += float(timestep.attrib['time'])   
                 
     return simulation.central_server.net
 
@@ -129,6 +136,10 @@ def main():
     vehicle_dict = {}
     # location_list = sumo_data.rsuList_random(RSU_RANGE, NUM_RSU+NUM_VC) # uncomment this for random locations
     location_list = sumo_data.rsuList(RSU_RANGE, NUM_RSU+NUM_VC, output_junctions)
+
+    # Polygons class of zones partitioned
+    with open("map_partition.data", "rb") as filehandle:
+        polygons = pickle.load(filehandle)
 
     # Priotize RSU locations
     rsu_list = location_list[:NUM_RSU]

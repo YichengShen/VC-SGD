@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from shapely.geometry.polygon import Polygon
 import matplotlib.path as mpltPath
+import pickle
 
 # Ref: https://nbviewer.jupyter.org/gist/pv/8037100
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.spatial.Voronoi.html
@@ -92,6 +93,9 @@ def voronoi_finite_polygons_2d(vor, radius=None):
     return new_regions, np.asarray(new_vertices)
 
 
+with open("map_junctions.data", "rb") as filehandle:
+    output_junctions = pickle.load(filehandle)
+
 NUM_CLASSES = 10
 
 # coordinates of output junctions
@@ -125,3 +129,6 @@ polygons = [Polygon(vertices[r]) for r in regions]
 # plt.ylim(2700, 3700)
 
 # plt.show()
+
+# with open("map_partition.data", "wb") as filehandle:
+#     pickle.dump(polygons, filehandle)

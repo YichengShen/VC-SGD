@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import DBSCAN
 import yaml
+import pickle
 
 file = open('config.yml', 'r')
 cfg = yaml.load(file, Loader=yaml.FullLoader)
@@ -38,6 +39,7 @@ min_samples = round(num_points * 0.001) # 0.1% of traffic points
 eps = 5 # the initial eps value
 n_clusters_ = -1
 num_rsu = cfg['simulation']['num_rsu'] + cfg['simulation']['num_vc']
+# num_rsu = 10
 # Try different eps until we find enough clusters (>= number of rsu we want to place)
 # If this fails, we need to lower our RSU number
 while n_clusters_ < num_rsu:
@@ -177,3 +179,7 @@ for key, junction in junction_dic.items():
 # Plot RSU as red stars
 # plt.scatter(x_rsu, y_rsu, s=50, c='red', marker='*')
 # plt.show()
+
+
+# with open("map_junctions.data", "wb") as filehandle:
+#     pickle.dump(output_junctions, filehandle)
