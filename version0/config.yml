@@ -1,39 +1,23 @@
+aggregation_method: simplemean
+attack: noattack
+cgc_method: by-layer
 comm_range:
-  v2rsu: 100            # vehicle to RSU
-
-simulation:
-  ROU_FILE: '../osm_boston_common/osm.passenger.trips.xml'
-  NET_FILE: '../osm_boston_common/osm.net.xml'
-  FCD_FILE: '../osm_boston_common/osm_fcd.xml'
-  # ROU_FILE: ''
-  # NET_FILE: '../MonacoST/most.net.xml'
-  # FCD_FILE: '../MonacoST/most_fcd.xml'
-  # ROU_FILE: '../osm_london/osm.passenger.trips.xml'
-  # NET_FILE: '../osm_london/osm.net.xml'
-  # FCD_FILE: '../osm_london/london_fcd.xml'
-
-  num_rsu: 5            # number of RSU
-  num_vc: 0 # 0, 2, 4, 6, 8, 10
-  vc_min_vehi: 5
-  maximum_rsu_accumulative_gradients: 10 # how many gradients does an RSU accumulate before updating the central server
-
+  v2rsu: 100
+dataset: mnist
 neural_network:
   batch_size: 100
   epoch: 100
-  # cifar lr = 0.0005
-  learning_rate: 0.0005
-
-seed: 99
-
-
-# ********* frequently changed parameters ***************
-
-dataset: 'mnist' # mnist, cifar10
-num_training_data: 60000 
-num_val_loss: 5000
-
-aggregation_method: 'simplemean' # simplemean, cgc
-attack: 'noattack'  # signflip, gaussian, bitflip, label, noattack
+  learning_rate: 0.005
 num_faulty_grads: 2
-
-cgc_method: 'by-layer' # by-layer, multiply
+num_training_data: 60000
+num_val_loss: 5000
+num_vc: 6
+seed: 99
+simulation:
+  FCD_FILE: ../osm_boston_common/osm_fcd.xml
+  NET_FILE: ../osm_boston_common/osm.net.xml
+  ROU_FILE: ../osm_boston_common/osm.passenger.trips.xml
+  maximum_rsu_accumulative_gradients: 10
+  num_rsu: 5
+  num_vc: 6
+  vc_min_vehi: 5
