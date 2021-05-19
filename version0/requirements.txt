@@ -3,7 +3,7 @@ Shapely==1.7.1
 matplotlib==3.3.4
 gluoncv==0.8.0
 pandas==1.0.1
-mxnet==1.7.0.post1
+mxnet
 scipy==1.4.1
 PyYAML==5.4.1
 ruamel.base==1.0.0
