@@ -42,11 +42,11 @@ for i in train_data:
     X = list(X.asnumpy())
     y = list(y.asnumpy())
     # for random
-    X_first_half = X[:int(len(X)/4)]
-    y_first_half = y[:int(len(y)/4)]
+    X_first_half = X[:int(len(X)/2)]
+    y_first_half = y[:int(len(y)/2)]
     # for byclass
-    X_second_half = X[int(len(X)/4):]
-    y_second_half = y[int(len(y)/4):]
+    X_second_half = X[int(len(X)/2):]
+    y_second_half = y[int(len(y)/2):]
 
 # Put second_half data into different classes
 train_data_byclass = defaultdict(list)
