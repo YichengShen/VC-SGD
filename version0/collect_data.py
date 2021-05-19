@@ -4,7 +4,7 @@ import os
 
 
 
-for num_vehicular_clouds in [0, 3]:
+for num_vehicular_clouds in [6, 9]:
     for I in range(1,6):
         with open('config.yml', 'r') as file:
             cfg = yaml.load(file, Loader=yaml.FullLoader)
